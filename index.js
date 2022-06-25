@@ -38,6 +38,8 @@ module.exports = class extends CheckBox {
     initDomConts () {
         try {
             super.initDomConts();
+            this.childDom().parent().style({ "align-items": "center" });
+
 	    this.childDom().attrs({ "data-labelauty" : " " });
 	    this.text().style({
 	        "margin-top":"auto",
