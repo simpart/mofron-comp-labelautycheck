@@ -46,6 +46,7 @@ module.exports = class extends CheckBox {
 		"margin-bottom":"auto",
 		"margin-left":"0.1rem"
 	    });
+	    this.styleDom(this.rootDom()[0]);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -58,7 +59,9 @@ module.exports = class extends CheckBox {
     afterRender () {
         try {
             super.afterRender();
-	    jQuery('#' + this.childDom().id()).labelauty();
+	    jQuery('#' + this.childDom().id()).labelauty({
+	        label: false,
+            });
 	} catch (e) {
             console.error(e.stack);
             throw e;
