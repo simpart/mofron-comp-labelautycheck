@@ -21,6 +21,8 @@ module.exports = class extends CheckBox {
             this.modname("LabelautyCheck");
             
 	    /* init config */
+            this.confmng().add('padding', { type:'size', init:'0.1rem' });
+            
 	    if (0 < arguments.length) {
                 this.config(p1);
             }
@@ -46,13 +48,22 @@ module.exports = class extends CheckBox {
 		"margin-bottom":"auto",
 		"margin-left":"0.1rem"
 	    });
-	    this.styleDom(this.rootDom()[0]);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
+    beforeRender () {
+        try {
+            super.beforeRender();
+            this.m_style_buf = this.style();
+	} catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+
     /**
      * @type private
      */
@@ -62,6 +73,25 @@ module.exports = class extends CheckBox {
 	    jQuery('#' + this.childDom().id()).labelauty({
 	        label: false,
             });
+	    this.styleDom(this.styleDom().parent());
+            
+            this.style(this.m_style_buf);
+            this.styleDom().getRawDom().childNodes[1].style['padding'] = this.padding();
+
+	    for (let lbl_idx in this.styleDom().getRawDom().childNodes) {
+	        if (1 < parseInt(lbl_idx)) {
+                    this.styleDom().getRawDom().childNodes[lbl_idx].style['display'] = 'none';
+		}
+	    }
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+
+    padding (prm) {
+        try {
+            return this.confmng('padding', prm);
 	} catch (e) {
             console.error(e.stack);
             throw e;
